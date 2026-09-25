@@ -5,6 +5,7 @@ import Button from "@/components/ui/Button";
 import type { Metadata } from "next";
 import { buildPageMetadata, getPublicLocale } from "@/lib/i18n/public-server";
 import { localizePath, publicDictionaries } from "@/lib/i18n/public-dictionary";
+import { sanitizeRichText } from "@/lib/sanitize";
 
 
 export const dynamic = 'force-dynamic';
@@ -39,7 +40,7 @@ export default async function TreatmentDetailPage({ params }: { params: Promise<
       <section className="section-padding container" style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "var(--spacing-12)" }}>
         <div>
           <h2>{t.overview}</h2>
-          <div style={{ fontSize: "1.1rem", lineHeight: "1.8", color: "var(--color-text-main)" }} dangerouslySetInnerHTML={{ __html: treatment.full_description || `<p>${t.descriptionSoon}</p>` }} />
+          <div style={{ fontSize: "1.1rem", lineHeight: "1.8", color: "var(--color-text-main)" }} dangerouslySetInnerHTML={{ __html: sanitizeRichText(treatment.full_description) || `<p>${t.descriptionSoon}</p>` }} />
         </div>
         <div>
           <div style={{ background: "var(--color-surface-alt)", padding: "var(--spacing-6)", borderRadius: "var(--radius-lg)", position: "sticky", top: "100px" }}>

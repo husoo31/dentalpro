@@ -142,6 +142,25 @@ a {
   outline-offset: 2px;
 }
 
+/* ACCESSIBILITY: skip-to-content link — off-screen until keyboard-focused */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--spacing-3);
+  z-index: 1000;
+  padding: var(--spacing-2) var(--spacing-3);
+  background: var(--color-surface);
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: var(--spacing-2);
+}
+
 /* ACCESSIBILITY: respect reduced-motion system-wide, not just .reveal */
 @media (prefers-reduced-motion: reduce) {
   html {

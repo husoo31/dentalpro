@@ -8,10 +8,13 @@ export default async function PublicLayout({ children }: { children: React.React
   const settings = await getSettings();
   const locale = await getPublicLocale();
 
+  const skipLabel = locale === "en" ? "Skip to content" : "İçeriğe geç";
+
   return (
     <>
+      <a href="#main-content" className="skip-link">{skipLabel}</a>
       <Navbar settings={settings} locale={locale} />
-      <main className="min-h-screen">{children}</main>
+      <main id="main-content" className="min-h-screen">{children}</main>
       <Footer settings={settings} locale={locale} />
       <WhatsAppButton phone={settings.whatsapp} clinicName={settings.clinicName} locale={locale} />
     </>

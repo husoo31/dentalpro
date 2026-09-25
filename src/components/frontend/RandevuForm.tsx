@@ -10,6 +10,11 @@ export default function RandevuForm({ treatments, selectedTreatmentId, locale }:
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  // Client-side hint only (browser local time); the server independently rejects past dates.
+  const [minDateTime] = useState(() => {
+    const now = new Date();
+    return new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,7 +75,7 @@ export default function RandevuForm({ treatments, selectedTreatmentId, locale }:
       
       <div className={styles.inputGroup}>
         <label className={styles.label}>{t.preferredDate} <span className="text-accent">*</span></label>
-        <input type="datetime-local" name="desired_date" required className={styles.input} />
+        <input type="datetime-local" name="desired_date" required className={styles.input} min={minDateTime} />
       </div>
       
       <Button type="submit" disabled={loading} size="lg" className={styles.submitBtn}>

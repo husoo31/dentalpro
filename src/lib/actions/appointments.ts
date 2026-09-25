@@ -1,9 +1,8 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 import { appointmentSchema } from "@/lib/zod";
-import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
-import { authOptions } from "@/lib/auth";
+import { requireRole } from "@/lib/authz";
 import type { AppointmentStatus } from "@prisma/client";
 
 export async function createAppointment(data: any) {
@@ -41,11 +40,7 @@ const ADMIN_TRANSITIONS: Partial<Record<AppointmentStatus, AppointmentStatus[]>>
  * server actions are reachable by direct POST regardless of which page rendered the form.
  */
 export async function updateAppointmentStatus(id: string, newStatus: "CONFIRMED" | "CANCELLED") {
-  const session = await getServerSession(authOptions);
-  const role = (session?.user as { role?: string } | undefined)?.role;
-  if (!session || (role !== "ADMIN" && role !== "EDITOR")) {
-    throw new Error("Unauthorized");
-  }
+  await requireRole("ADMIN", "EDITOR");
 
   const from = ADMIN_TRANSITIONS[newStatus];
   if (typeof id !== "string" || !from) {

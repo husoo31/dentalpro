@@ -1,6 +1,7 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { requireRole } from "@/lib/authz";
 
 export async function getSettings() {
   const settings = await prisma.settings.findMany();
@@ -13,6 +14,8 @@ export async function getSettings() {
 
 export async function updateSettings(data: Record<string, string>) {
   try {
+    await requireRole("ADMIN", "EDITOR");
+
     for (const [key, value] of Object.entries(data)) {
       // Security Validation
       
