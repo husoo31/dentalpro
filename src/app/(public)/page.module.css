@@ -1,0 +1,215 @@
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 80px;
+}
+
+.heroImageWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(11, 15, 25, 0.8) 0%, rgba(11, 15, 25, 0.4) 100%);
+}
+
+.heroContent {
+  color: var(--color-text-inverse);
+  max-width: 800px;
+}
+
+.heroContent h1 {
+  color: var(--color-text-inverse);
+  font-size: clamp(3rem, 7vw, 6rem);
+  margin-bottom: var(--spacing-4);
+}
+
+.subtitle {
+  font-family: var(--font-inter);
+  color: var(--color-accent);
+  letter-spacing: 0.2em;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-3);
+  text-transform: uppercase;
+}
+
+.heroDesc {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: clamp(1.125rem, 2vw, 1.35rem);
+  margin-bottom: var(--spacing-8);
+  max-width: 600px;
+}
+
+.heroActions {
+  display: flex;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+}
+
+.heroSecondaryBtn {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: var(--color-text-inverse);
+}
+.heroSecondaryBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--color-text-inverse);
+}
+
+/* Intro Section */
+.introGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-12);
+  align-items: center;
+}
+@media (min-width: 1024px) {
+  .introGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.introText h2 {
+  margin-bottom: var(--spacing-6);
+}
+.introText p {
+  margin-bottom: var(--spacing-6);
+}
+
+.introImageWrapper {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-elegant);
+  aspect-ratio: 4/5;
+}
+.introImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Treatments Section */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: var(--spacing-12);
+}
+
+.treatmentsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-6);
+}
+@media (min-width: 768px) {
+  .treatmentsGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .treatmentsGrid { grid-template-columns: repeat(3, 1fr); gap: var(--spacing-8); }
+}
+
+.treatmentCard {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+.treatmentCard:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.treatmentImgWrapper {
+  aspect-ratio: 16/10;
+  overflow: hidden;
+}
+.treatmentImgWrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+.treatmentCard:hover .treatmentImgWrapper img {
+  transform: scale(1.05);
+}
+
+.treatmentCardContent {
+  padding: var(--spacing-5);
+}
+.treatmentCardContent h3 {
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-2);
+}
+.treatmentBtn {
+  padding-left: 0;
+  margin-top: var(--spacing-2);
+}
+
+/* CTA Section */
+.ctaSection {
+  text-align: center;
+  padding: var(--spacing-8) 0;
+}
+.ctaSection h2 {
+  color: var(--color-text-inverse);
+  margin-bottom: var(--spacing-4);
+}
+.ctaSection p {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: var(--spacing-8);
+}
+
+/* Testimonials Section */
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-6);
+}
+@media (min-width: 768px) {
+  .testimonialsGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .testimonialsGrid { grid-template-columns: repeat(3, 1fr); gap: var(--spacing-8); }
+}
+
+.testimonialCard {
+  margin: 0;
+  padding: var(--spacing-6);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.testimonialStars {
+  color: var(--color-accent);
+  margin-bottom: var(--spacing-3);
+  letter-spacing: 2px;
+}
+
+.testimonialCard blockquote {
+  margin: 0 0 var(--spacing-4);
+}
+
+.testimonialCard figcaption {
+  font-weight: 600;
+  color: var(--color-primary);
+}

@@ -1,0 +1,66 @@
+.button {
+  position: fixed;
+  right: 1.25rem;
+  bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  /* white glyph on WhatsApp green: darker green keeps >= 3:1 for the graphic */
+  background-color: #128c4a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22), 0 1px 3px rgba(0, 0, 0, 0.18);
+  z-index: 500;
+  transition: transform 200ms ease-out, box-shadow 200ms ease-out, background-color 200ms ease-out;
+}
+
+.icon {
+  display: block;
+  transition: transform 220ms ease-out;
+}
+
+@media (hover: hover) {
+  .button:hover {
+    transform: scale(1.07);
+    background-color: #0f7a40;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28), 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  .button:hover .icon {
+    transform: rotate(-8deg) scale(1.05);
+  }
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.button:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px #128c4a, 0 6px 16px rgba(0, 0, 0, 0.22);
+}
+
+@media (max-width: 640px) {
+  .button {
+    width: 52px;
+    height: 52px;
+    right: 1rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .icon {
+    transition: none;
+  }
+
+  .button:hover,
+  .button:active,
+  .button:hover .icon {
+    transform: none;
+  }
+}

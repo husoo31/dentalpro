@@ -1,0 +1,191 @@
+.wrapper {
+  max-width: 1000px;
+}
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: var(--spacing-4);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-4);
+}
+
+.cardTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+  margin-bottom: var(--spacing-4);
+  padding-bottom: var(--spacing-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-3);
+}
+
+@media (max-width: 640px) {
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: var(--spacing-3);
+}
+
+.field label {
+  display: block;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--color-text-main);
+}
+
+.field input,
+.field textarea {
+  padding: 0.625rem var(--spacing-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-strong);
+  background-color: var(--color-surface);
+  color: var(--color-text-main);
+  font-family: inherit;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.field input[aria-invalid="true"],
+.field textarea[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+.fieldErrorText {
+  font-size: 0.8rem;
+  color: var(--color-danger);
+  font-weight: 500;
+}
+
+.field textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.colorRow {
+  display: flex;
+  gap: var(--spacing-2);
+  align-items: center;
+}
+
+.colorRow input[type="color"] {
+  width: 44px;
+  height: 40px;
+  flex-shrink: 0;
+  padding: 2px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-strong);
+  cursor: pointer;
+}
+
+.colorRow > input:not([type="color"]) {
+  flex: 1;
+}
+
+.banner {
+  padding: var(--spacing-3);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-4);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.bannerError {
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.bannerSuccess {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.submitButton {
+  width: 100%;
+}
+
+/* Upload vs URL mode tabs */
+.modeTabs {
+  display: inline-flex;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: var(--spacing-2);
+  align-self: flex-start;
+}
+
+.modeTab {
+  background: none;
+  border: none;
+  padding: 0.3rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.modeTab:not(:last-child) {
+  border-right: 1px solid var(--color-border-strong);
+}
+
+.modeTabActive {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+.uploadRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.preview {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  object-fit: cover;
+  background-color: var(--color-surface-hover);
+}
+
+.uploadStatus {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.uploadStatusError {
+  color: var(--color-danger);
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: var(--color-danger);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-md);
+}
+
+.removeButton:hover {
+  background-color: var(--color-danger-bg);
+}

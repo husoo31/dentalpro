@@ -1,0 +1,101 @@
+.main {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  /* top padding clears the fixed navbar */
+  padding: calc(var(--spacing-16) + 48px) 0 var(--spacing-16);
+  display: flex;
+  align-items: center;
+}
+
+.heroBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Neutral deep base with a controlled brand tint (max 22%), so white text keeps >= 7:1
+     contrast whatever primary color is configured in Settings. */
+  background: linear-gradient(135deg, #0b1220 0%, color-mix(in srgb, var(--color-primary) 22%, #0b1220) 100%);
+  z-index: -1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-12);
+  align-items: flex-start;
+}
+@media (min-width: 1024px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+}
+
+.content {
+  color: var(--color-text-inverse);
+  padding-top: var(--spacing-8);
+}
+
+.subtitle {
+  font-family: var(--font-inter);
+  /* accent lightened slightly so it stays >= 4.5:1 on the hero gradient */
+  color: color-mix(in srgb, var(--color-accent) 80%, white);
+  letter-spacing: 0.1em;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.content h1 {
+  color: var(--color-text-inverse);
+  overflow-wrap: break-word;
+  margin-bottom: var(--spacing-6);
+}
+
+.description {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 1.125rem;
+  overflow-wrap: anywhere;
+  margin-bottom: var(--spacing-12);
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+@media (min-width: 768px) {
+  .contactInfo { flex-direction: row; gap: var(--spacing-12); }
+}
+
+.infoBlock h4 {
+  color: color-mix(in srgb, var(--color-accent) 80%, white);
+  font-size: 1rem;
+  margin-bottom: var(--spacing-2);
+}
+.infoBlock p {
+  color: var(--color-text-inverse);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.formWrapper {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-8);
+  box-shadow: var(--shadow-elegant);
+}
+
+.formHeader {
+  margin-bottom: var(--spacing-6);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--spacing-4);
+}
+
+.formHeader h3 {
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-1);
+}
+.formHeader p {
+  font-size: 0.95rem;
+  margin: 0;
+}

@@ -1,0 +1,100 @@
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  transition: all var(--transition-normal);
+  background: transparent;
+  padding: var(--spacing-4) 0;
+}
+
+.header.scrolled {
+  background: color-mix(in srgb, var(--color-surface) 95%, transparent);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-2) 0;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-family: var(--font-outfit);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
+}
+
+.links {
+  display: none;
+  gap: var(--spacing-6);
+}
+
+.link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text-main);
+  position: relative;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-accent);
+  transition: width var(--transition-fast);
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .links {
+    display: flex;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.phone {
+  display: none;
+  margin-right: var(--spacing-2);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-primary);
+}
+
+@media (min-width: 768px) {
+  .phone { display: inline; }
+}
+
+@media (max-width: 480px) {
+  .cta { padding-left: var(--spacing-3); padding-right: var(--spacing-3); font-size: 0.8rem; white-space: nowrap; }
+}
+
+/* On the solid header the brand color is swapped for a variant guaranteed readable on white. */
+.header.scrolled .logo,
+.header.scrolled .phone {
+  color: var(--color-primary-text, var(--color-primary));
+}
+
+@media (prefers-color-scheme: dark) {
+  .header.scrolled .logo,
+  .header.scrolled .phone {
+    color: var(--color-primary-text-on-dark, var(--color-primary));
+  }
+}

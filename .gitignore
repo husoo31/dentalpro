@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local PostgreSQL binaries (exceeds GitHub 100MB limit)
+pgsql.zip

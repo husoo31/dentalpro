@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  password_hash String
+  role          Role     @default(EDITOR)
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  posts         Post[]
+}
+
+model Settings {
+  id    String @id @default(uuid())
+  key   String @unique
+  value String @db.Text
+  group String
+}
+
+model Doctor {
+  id         String   @id @default(uuid())
+  slug       String   @unique
+  full_name  String
+  title      String
+  bio        String?  @db.Text
+  image_url  String?
+  is_active  Boolean  @default(true)
+  sort_order Int      @default(0)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  posts      Post[]
+}
+
+model Treatment {
+  id                String   @id @default(uuid())
+  slug              String   @unique
+  name              String
+  short_description String?
+  full_description  String?  @db.Text
+  icon_url          String?
+  image_url         String?
+  is_active         Boolean  @default(true)
+  sort_order        Int      @default(0)
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+
+  appointments      Appointment[]
+  before_afters     BeforeAfter[]
+  testimonials      Testimonial[]
+}
+
+model Appointment {
+  id           String   @id @default(uuid())
+  patient_name String
+  phone        String
+  email        String?
+  desired_date DateTime
+  treatment_id String?
+  message      String?  @db.Text
+  status       AppointmentStatus @default(PENDING)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  treatment    Treatment? @relation(fields: [treatment_id], references: [id], onDelete: SetNull)
+}
+
+model Post {
+  id              String   @id @default(uuid())
+  slug            String   @unique
+  title           String
+  summary         String?
+  content         String   @db.Text
+  image_url       String?
+  author_id       String?
+  doctor_id       String?
+  seo_title       String?
+  seo_description String?
+  is_published    Boolean  @default(false)
+  published_at    DateTime?
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  author          User?    @relation(fields: [author_id], references: [id], onDelete: SetNull)
+  doctor          Doctor?  @relation(fields: [doctor_id], references: [id], onDelete: SetNull)
+}
+
+model BeforeAfter {
+  id           String   @id @default(uuid())
+  title        String
+  treatment_id String?
+  before_image String
+  after_image  String
+  description  String?  @db.Text
+  is_active    Boolean  @default(true)
+  created_at   DateTime @default(now())
+
+  treatment    Treatment? @relation(fields: [treatment_id], references: [id], onDelete: SetNull)
+}
+
+model Gallery {
+  id         String   @id @default(uuid())
+  title      String
+  category   String?
+  image_url  String
+  sort_order Int      @default(0)
+  created_at DateTime @default(now())
+}
+
+model Testimonial {
+  id           String   @id @default(uuid())
+  patient_name String
+  treatment_id String?
+  text         String   @db.Text
+  rating       Int      @default(5)
+  is_featured  Boolean  @default(false)
+  created_at   DateTime @default(now())
+
+  treatment    Treatment? @relation(fields: [treatment_id], references: [id], onDelete: SetNull)
+}
