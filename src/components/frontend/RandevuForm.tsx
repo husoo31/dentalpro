@@ -30,7 +30,11 @@ export default function RandevuForm({ treatments, selectedTreatmentId, locale }:
       // The action returns Turkish/technical strings; show localized messages instead.
       const fieldErrors = typeof res.error === 'string' ? null : (res.error as Record<string, { _errors?: string[] }>);
       const firstField = fieldErrors && (["patient_name", "phone", "desired_date"] as const).find(k => fieldErrors[k]?._errors?.length);
-      setError(!fieldErrors ? t.errors.server : firstField ? t.errors[firstField] : t.errors.generic);
+      setError(
+        res.error === "RATE_LIMITED" ? t.errors.rateLimited :
+        !fieldErrors ? t.errors.server :
+        firstField ? t.errors[firstField] : t.errors.generic
+      );
     } else {
       setSuccess(true);
       (e.target as HTMLFormElement).reset();

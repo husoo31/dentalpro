@@ -104,6 +104,7 @@ const tr = {
       desired_date: "Lütfen geçerli bir tarih seçin.",
       generic: "Lütfen formdaki alanları kontrol edin.",
       server: "Talebiniz şu anda gönderilemedi. Lütfen daha sonra tekrar deneyin.",
+      rateLimited: "Çok fazla deneme yaptınız. Lütfen birkaç dakika sonra tekrar deneyin.",
     },
   },
   treatments: {
@@ -225,6 +226,7 @@ const en: typeof tr = {
       desired_date: "Please choose a valid date.",
       generic: "Please check the highlighted fields.",
       server: "We could not send your request right now. Please try again later.",
+      rateLimited: "Too many attempts. Please try again in a few minutes.",
     },
   },
   treatments: {

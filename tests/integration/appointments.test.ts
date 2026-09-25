@@ -3,6 +3,12 @@ import { describe, it, expect, beforeEach, afterAll, vi } from "vitest";
 
 vi.mock("next-auth", () => ({ getServerSession: vi.fn() }));
 vi.mock("next/cache", () => ({ revalidatePath: vi.fn() }));
+// Each simulated request gets its own IP so these tests never collide with the rate limiter
+// (which is exercised deliberately in tests/integration/appointment-rate-limit.test.ts).
+let ipCounter = 0;
+vi.mock("next/headers", () => ({
+  headers: vi.fn(async () => new Map([["x-forwarded-for", `10.0.0.${++ipCounter}`]])),
+}));
 import { getServerSession } from "next-auth";
 const mockedSession = getServerSession as unknown as ReturnType<typeof vi.fn>;
 

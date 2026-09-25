@@ -2,16 +2,36 @@
 import { prisma } from "@/lib/prisma";
 import { appointmentSchema } from "@/lib/zod";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { requireRole } from "@/lib/authz";
+import { checkRateLimit } from "@/lib/rate-limit";
 import type { AppointmentStatus } from "@prisma/client";
+
+// Public, unauthenticated endpoint by design (anyone can request an appointment) — the
+// abuse control here is a request-rate cap per client, not identity.
+const APPOINTMENT_RATE_LIMIT_MAX = 5;
+const APPOINTMENT_RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
+
+async function getClientIp(): Promise<string> {
+  const hdrs = await headers();
+  const forwardedFor = hdrs.get("x-forwarded-for");
+  if (forwardedFor) return forwardedFor.split(",")[0].trim();
+  return hdrs.get("x-real-ip") || "unknown";
+}
 
 export async function createAppointment(data: any) {
   try {
+    const ip = await getClientIp();
+    const { allowed } = checkRateLimit(`appointment:${ip}`, APPOINTMENT_RATE_LIMIT_MAX, APPOINTMENT_RATE_LIMIT_WINDOW_MS);
+    if (!allowed) {
+      return { error: "RATE_LIMITED" };
+    }
+
     const parsed = appointmentSchema.safeParse(data);
     if (!parsed.success) {
       return { error: parsed.error.format() };
     }
-    
+
     await prisma.appointment.create({
       data: {
         patient_name: parsed.data.patient_name,

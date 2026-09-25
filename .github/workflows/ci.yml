@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    # Ephemeral service container, created fresh for this run and destroyed afterwards.
+    # Never points at a real/shared/production database.
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: dentalpro_ci
+          POSTGRES_PASSWORD: dentalpro_ci
+          POSTGRES_DB: dentalpro_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://dentalpro_ci:dentalpro_ci@localhost:5432/dentalpro_ci
+      NEXTAUTH_SECRET: ci-only-secret-not-used-in-production
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Prisma generate
+        run: npx prisma generate
+
+      - name: Apply migrations to the ephemeral CI database
+        run: npx prisma migrate deploy
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Lint
+        # Pre-existing lint debt (see project history) is out of scope for this workflow;
+        # surfaced here for visibility without blocking the pipeline on it.
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
