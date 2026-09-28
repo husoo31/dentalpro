@@ -20,13 +20,17 @@ export default function Footer({ settings, locale }: { settings: Record<string, 
         </div>
         <div className={styles.links}>
           <h3>{t.clinic}</h3>
+          <Link href={href("/hakkimizda")}>{t.about}</Link>
           <Link href={href("/doktorlar")}>{t.specialists}</Link>
           <Link href={href("/galeri")}>{t.gallery}</Link>
+          <Link href={href("/once-sonra")}>{t.beforeAfter}</Link>
         </div>
         <div className={styles.links}>
           <h3>{t.services}</h3>
           <Link href={href("/tedaviler")}>{t.allTreatments}</Link>
           <Link href={href("/randevu")}>{t.bookAppointment}</Link>
+          <Link href={href("/blog")}>{t.blog}</Link>
+          <Link href={href("/iletisim")}>{t.contact}</Link>
         </div>
         <div className={styles.contact}>
           <h3>{t.visitUs}</h3>

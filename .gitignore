@@ -42,3 +42,6 @@ next-env.d.ts
 
 # local PostgreSQL binaries (exceeds GitHub 100MB limit)
 pgsql.zip
+
+# user-uploaded files (served at runtime via app/uploads/[...path]/route.ts)
+/uploads

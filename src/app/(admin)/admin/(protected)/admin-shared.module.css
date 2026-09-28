@@ -85,7 +85,7 @@
 .editLink {
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   padding: 0.375rem 0.75rem;
   border-radius: var(--radius-md);
   transition: background-color var(--transition-fast);

@@ -8,6 +8,10 @@
   --color-primary: hsl(var(--color-primary-h) var(--color-primary-s) var(--color-primary-l));
   --color-primary-light: hsl(var(--color-primary-h) var(--color-primary-s) 30%);
   --color-primary-dark: hsl(var(--color-primary-h) var(--color-primary-s) 10%);
+  /* Text-only variant of --color-primary: same navy on light surfaces, but
+     swapped for a light tone under dark mode so headings stay readable.
+     Never use for backgrounds — --color-primary itself stays brand-navy there. */
+  --color-primary-text: var(--color-primary);
 
   /* Accent: Soft Gold/Champagne - Premium & Elegant */
   --color-accent-h: 40;
@@ -85,6 +89,8 @@
     --color-text-muted: #9CA3AF;
     --color-border: #374151;
     --color-border-strong: #64748B;
+    --color-primary-text: var(--color-text-main);
+    --color-primary-text-on-dark: var(--color-text-main);
   }
 }
 
@@ -114,15 +120,15 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-outfit), serif;
   font-weight: 400;
   line-height: 1.1;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   margin-bottom: var(--spacing-3);
   letter-spacing: -0.02em;
 }
 
 h1 { font-size: clamp(2.5rem, 6vw, 5rem); }
 h2 { font-size: clamp(2rem, 4.5vw, 3.5rem); }
-h3 { font-size: clamp(1.5rem, 3vw, 2.5rem); }
-h4 { font-size: clamp(1.25rem, 2vw, 1.75rem); }
+h3 { font-size: clamp(1.5rem, 3vw, 2.5rem); letter-spacing: -0.01em; }
+h4 { font-size: clamp(1.25rem, 2vw, 1.75rem); letter-spacing: -0.01em; }
 
 p {
   margin-bottom: var(--spacing-3);
@@ -166,17 +172,39 @@ a {
 }
 
 .text-accent { color: var(--color-accent); }
-.text-primary { color: var(--color-primary); }
+.text-primary { color: var(--color-primary-text); }
 .bg-primary { background-color: var(--color-primary); color: var(--color-text-inverse); }
 .bg-surface { background-color: var(--color-surface); }
 .bg-alt { background-color: var(--color-surface-alt); }
+
+/* Editorial section label — the small gold tick-and-caps line above a heading.
+   Shared across every section header so the page reads as one system. */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-inter);
+  color: var(--color-accent);
+  letter-spacing: 0.2em;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-3);
+}
+.kicker::before {
+  content: '';
+  width: 28px;
+  height: 1.5px;
+  background: var(--color-accent);
+  flex-shrink: 0;
+}
 
 /* ANIMATIONS (Controlled Motion) */
 @media (prefers-reduced-motion: no-preference) {
   .reveal {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(18px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .reveal.active {
     opacity: 1;

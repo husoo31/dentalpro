@@ -33,7 +33,10 @@ export async function POST(req: NextRequest) {
     const ext = path.extname(originalName);
     const safeFilename = `${path.basename(originalName, ext)}_${uniqueSuffix}${ext}`;
     
-    const uploadDir = path.join(process.cwd(), "public/uploads");
+    // Written outside `public/` and served via app/uploads/[...path]/route.ts:
+    // Next.js traces the public folder's file list at build time, so files
+    // written there at runtime 404 in production even though they're on disk.
+    const uploadDir = path.join(process.cwd(), "uploads");
     
     if (!existsSync(uploadDir)) {
       await mkdir(uploadDir, { recursive: true });

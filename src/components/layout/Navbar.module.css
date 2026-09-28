@@ -27,7 +27,7 @@
   font-family: var(--font-outfit);
   font-size: 1.5rem;
   font-weight: 500;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   letter-spacing: -0.02em;
 }
 
@@ -70,20 +70,137 @@
   gap: var(--spacing-3);
 }
 
-.phone {
+/* Below 1024px .links is hidden (see above), so the phone number, language
+   switcher and CTA move into .mobileMenu instead — there isn't room for all
+   of them plus the hamburger in the header row on tablet/mobile widths. */
+.desktopActions {
   display: none;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+@media (min-width: 1024px) {
+  .desktopActions {
+    display: flex;
+  }
+}
+
+.phone {
   margin-right: var(--spacing-2);
   font-weight: 600;
   font-size: 0.9rem;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
-@media (min-width: 768px) {
-  .phone { display: inline; }
+/* Hamburger toggle: only needed below the 1024px breakpoint where .links is hidden. */
+.menuToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
-@media (max-width: 480px) {
-  .cta { padding-left: var(--spacing-3); padding-right: var(--spacing-3); font-size: 0.8rem; white-space: nowrap; }
+@media (min-width: 1024px) {
+  .menuToggle { display: none; }
+}
+
+.menuIcon,
+.menuIcon::before,
+.menuIcon::after {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: var(--radius-full);
+  background-color: currentColor;
+  color: var(--color-primary-text);
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.header.scrolled .menuIcon,
+.header.scrolled .menuIcon::before,
+.header.scrolled .menuIcon::after {
+  color: var(--color-primary-text-on-dark, var(--color-primary-text));
+}
+
+.menuIcon {
+  position: relative;
+}
+
+.menuIcon::before,
+.menuIcon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+}
+
+.menuIcon::before { top: -7px; }
+.menuIcon::after { top: 7px; }
+
+.menuIconOpen {
+  background-color: transparent;
+}
+
+.menuIconOpen::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.menuIconOpen::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+/* Mobile/tablet drawer: dropdown panel anchored below the header, solid regardless of hero scroll state. */
+.mobileMenu {
+  display: none;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  padding: var(--spacing-4);
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+}
+
+.mobileMenu.mobileMenuOpen {
+  display: flex;
+}
+
+@media (min-width: 1024px) {
+  .mobileMenu { display: none !important; }
+}
+
+.mobileLink {
+  padding: var(--spacing-3) var(--spacing-2);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--color-text-main);
+  border-radius: var(--radius-md);
+}
+
+.mobileLink:hover,
+.mobileLink:focus-visible {
+  background-color: var(--color-surface-hover);
+}
+
+.mobilePhone {
+  padding: var(--spacing-2);
+  font-weight: 600;
+  color: var(--color-primary-text);
+}
+
+.mobileCta {
+  margin-top: var(--spacing-2);
+  width: 100%;
 }
 
 /* On the solid header the brand color is swapped for a variant guaranteed readable on white. */
