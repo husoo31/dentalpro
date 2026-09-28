@@ -1,8 +1,15 @@
 "use server";
+import { connection } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 export async function getSettings() {
+  // Settings are read from the DB on every request (white-label values can change
+  // at any time via /admin/settings). connection() also excludes this call from
+  // `next build`'s static prerendering pass — without it, the root layout's
+  // generateMetadata/RootLayout call this before any request exists, so build
+  // would need real DB access (see /_not-found prerender failures on Coolify).
+  await connection();
   const settings = await prisma.settings.findMany();
   const settingsMap: Record<string, string> = {};
   settings.forEach(s => {
